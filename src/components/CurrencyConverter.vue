@@ -14,6 +14,8 @@
 </template>
 
 <script>
+import { CurrencyService } from "../service/serviceCurrency.js";
+
 export default {
     data() {
         return {
@@ -30,8 +32,7 @@ export default {
                 const toCurrency = match[3].toUpperCase();
 
                 try {
-                    const response = await fetch(`https://api.exchangerate-api.com/v4/latest/${fromCurrency}`);
-                    const data = await response.json();
+                    const data = await  CurrencyService(fromCurrency);
 
                     if (data && data.rates && data.rates[toCurrency]) {
                         const rate = data.rates[toCurrency];

@@ -18,6 +18,8 @@
 </template>
 
 <script>
+import { CurrencyService } from "../service/serviceCurrency.js";
+
 export default {
     data() {
         return {
@@ -28,9 +30,7 @@ export default {
     methods: {
         async fetchRates() {
             try {
-                const response = await fetch(`https://api.exchangerate-api.com/v4/latest/${this.baseCurrency}`);
-                const data = await response.json();
-                this.rates = data.rates || {};
+                this.rates = await CurrencyService(this.baseCurrency).then(data => data.rates);
             } catch (error) {
                 this.rates = {};
             }
